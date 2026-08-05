@@ -1,28 +1,45 @@
-# atc-bootloader
+# ATC-Bootloader
 
-UEFI Bootloader für ShivaCore — der bare-metal Rust-Kernel von GlobusOS.
+Der Bootloader für A-TownChain OS — initialisiert Kernel, lädt Module, startet Chain.
 
-## Features (geplant)
-- UEFI Firmware-Initialisierung
-- GPT-Partition-Tabellen-Parsing
-- Kernel-Image-Loading (ELF64)
-- Kernel-Module-Loading (.km)
-- Secure Boot (Signature-Verification)
-- Memory-Map-Handoff an Kernel
-- VBE/GOP Framebuffer-Setup
-- Kommandozeilen-Parameter
-
-## Build
-```bash
-cargo build --target x86_64-unknown-uefi
+## Boot-Sequenz
+```
+Power On
+    │
+    ▼
+┌─────────────┐
+│  BIOS/UEFI  │   Hardware-Init
+└──────┬──────┘
+       ▼
+┌─────────────┐
+│  Bootloader │   Stage 1: MBR → Stage 2
+│  (atc-bl)   │   Stage 2: Kernel-Image laden
+└──────┬──────┘
+       ▼
+┌─────────────┐
+│  Kernel     │   ShivaCore Kernel init
+│  (ShivaOS) │   MMU, Scheduler, Drivers
+└──────┬──────┘
+       ▼
+┌─────────────┐
+│  Chain Init │   Bootstrap Node, Genesis
+│  (ATC)     │   Consensus, Networking
+└──────┬──────┘
+       ▼
+┌─────────────┐
+│  Userspace  │   Shell, Services, Agents
+└─────────────┘
 ```
 
-## Abhängigkeiten
-- [atc-shivacore](https://github.com/A-TownChain-Okosystems/atc-shivacore) — Kernel, der geladen wird
+## Komponenten
+- **Stage 1** — MBR/UEFI Boot Sector (512 bytes)
+- **Stage 2** — Filesystem driver, Kernel-Image loader
+- **Kernel Jump** — Übergabe an ShivaCore Kernel (atc-shivacore)
+- **Module Pre-Load** — Essential LKMs laden (kalloc, ksched)
+- **Chain Bootstrap** — Bootstrap Node (#14) starten
 
-## Status
-- Initial: Repo erstellt 05.08.2026
-- Sprache: Rust (no_std, UEFI-Target)
+## Verwandte Repos
+- [atc-shivacore](https://github.com/A-TownChain-Okosystems/atc-shivacore) — Kernel
+- [atc-kernel](https://github.com/A-TownChain-Okosystems/atc-kernel) — Kernel Module (Python)
 
----
-Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
+[agent: aurora-base44-superagent-6a2756186106d6f0fbb105b5]
