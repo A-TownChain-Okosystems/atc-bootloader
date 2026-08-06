@@ -105,3 +105,6 @@ Open-Source-Oekosystem. Unlizenzierter Code wird von der ATVM physisch nicht aus
 - [ATC-LIC — System & Hardware Licenses](https://github.com/A-TownChain-Okosystems/a-townchain-os-docs/blob/main/docs/standards/ATC-LIC-SYSTEM_HARDWARE_LICENSE.md)
 - [Compliance-Handbuch (BaFin)](https://github.com/A-TownChain-Okosystems/a-townchain-os-docs/blob/main/docs/compliance/COMPLIANCE_HANDBUCH.md)
 - [Lizenz-Uebersicht](https://github.com/A-TownChain-Okosystems/a-townchain-os-docs/blob/main/docs/LICENSING_OVERVIEW.md)
+
+## Abhängigkeiten
+- [`A-TownChain-Okosystems/atc-shivacore`](https://github.com/A-TownChain-Okosystems/atc-shivacore)
